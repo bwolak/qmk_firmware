@@ -1,4 +1,4 @@
-/* Copyright 2020 imchipwood
+/* Copyright 2019 Biacco42
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,18 +13,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-#include "quantum.h"
+#include QMK_KEYBOARD_H
 
-#define LAYOUT( \
-	  k00, k01, k02, k03, \
-	  k10, k11, k12, k13, \
-	  k20, k21, k22, k23, \
-	  k30, k31, k32, k33 \
-) \
-{ \
-    { k00, k01, k02, k03 }, \
-    { k10, k11, k12, k13 }, \
-    { k20, k21, k22, k23 }, \
-    { k30, k31, k32, k33 }, \
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  [0] = LAYOUT( /* Base */
+    LCTL(KC_P0),  LCTL(KC_P1),  LCTL(KC_P2), LCTL(KC_P3) \
+  )
+};
+
+void matrix_init_user(void) {
+
 }
+
+void matrix_scan_user(void) {
+
+}
+
+void led_set_user(uint8_t usb_led) {
+
+}
+

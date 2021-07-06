@@ -18,6 +18,10 @@
 #define _BASE 0
 #define _SUB  1
 
+enum custom_keycodes {
+    RUBYPRY = SAFE_RANGE,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
             BASE LAYER
@@ -32,10 +36,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     \-----------------------------------------------------'
     */
     [_BASE] = LAYOUT(
-                    KC_7,      KC_8,    KC_9,             KC_BSPC,
-                    KC_4,      KC_5,    KC_6,             KC_ESC,
-                    KC_1,      KC_2,    KC_3,             KC_TAB,
-        KC_BTN1,    TT(_SUB),  KC_0,    LSFT_T(KC_DOT),   KC_ENTER
+                    RUBYPRY,    KC_0,          KC_0,           KC_0,
+                    KC_0,       LCTL(KC_P7),   LCTL(KC_P8),    LCTL(KC_P9),
+                    KC_0,       LCTL(KC_P4),   LCTL(KC_P5),    LCTL(KC_P6),
+        KC_BTN1,    TT(_SUB),    LCTL(KC_P1),   LCTL(KC_P2),    LCTL(KC_P3)
     ),
     /*
             SUB LAYER
@@ -50,10 +54,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     \-----------------------------------------------------'
     */
     [_SUB] = LAYOUT(
-                    _______,     _______,     _______,      RESET,
-                    _______,     _______,     _______,      KC_KP_PLUS,
-                    _______,     _______,     _______,      KC_KP_MINUS,
-        KC_LOCK,    _______,     _______,     _______,      KC_EQL
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+                    _______,     _______,     _______,      _______,
+        KC_LOCK,    _______,     _______,     _______,      _______
     ),
 };
 
@@ -64,6 +68,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
 #endif
 */
+    switch (keycode) {
+    case RUBYPRY:
+        if (record->event.pressed) {
+            // when keycode RUBYPRY is pressed
+            SEND_STRING("require 'pry'; binding.pry");
+        } else {
+            // when keycode RUBYPRY is released
+        }
+        break;
+    }
+
     return true;
 }
 
@@ -102,18 +117,18 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             case _BASE:
                 // main layer - move mouse right (CW) and left (CCW)
                 if (clockwise) {
-                    tap_code(KC_MS_R);
+                    tap_code(KC_VOLU);
                 } else {
-                    tap_code(KC_MS_L);
+                    tap_code(KC_VOLD);
                 }
                 break;
 
             default:
                 // other layers - =/+ (quals/plus) (CW) and -/_ (minus/underscore) (CCW)
                 if (clockwise) {
-                    tap_code(KC_EQL);
+                    tap_code16(SGUI(KC_Z));
                 } else {
-                    tap_code(KC_MINS);
+                    tap_code16(LGUI(KC_Z));
                 }
                 break;
         }

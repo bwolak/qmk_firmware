@@ -15,6 +15,10 @@
  */
 #include QMK_KEYBOARD_H
 
+#define _BASE 0
+#define _SUB  1
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
         BASE LAYER
@@ -25,14 +29,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    |---------|---------|---------|---------|             |
    |    1    |    2    |    3    |   Tab   |             |
    |---------|---------|---------|---------|-------------|
-   |  TT(1)  |    0    |    .    |  Enter  | Left mouse  |
+   | TT(SUB) |    0    |    .    |  Enter  | Left mouse  |
    \-----------------------------------------------------'
   */
-  [0] = LAYOUT(
+  [_BASE] = LAYOUT(
         KC_7,      KC_8,    KC_9,             KC_BSPC,
         KC_4,      KC_5,    KC_6,             KC_ESC,
         KC_1,      KC_2,    KC_3,             KC_TAB,
-        TT(1),     KC_0,    LSFT_T(KC_DOT),   KC_ENTER, KC_BTN1
+        TT(_SUB),  KC_0,    LSFT_T(KC_DOT),   KC_ENTER, KC_BTN1
   ),
   /*
         SUB LAYER
@@ -46,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    |         |         |         |    =    |    LOCK     |
    \-----------------------------------------------------'
   */
-  [1] = LAYOUT(
+  [_SUB] = LAYOUT(
         _______,     _______,     _______,      RESET,
         _______,     _______,     _______,      KC_KP_PLUS,
         _______,     _______,     _______,      KC_KP_MINUS,
@@ -72,7 +76,19 @@ void keyboard_post_init_user(void) {
     // debug_mouse = true;
 }
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
+void matrix_init_user(void) {
+
+}
+
+void matrix_scan_user(void) {
+
+}
+
+void led_set_user(uint8_t usb_led) {
+
+}
+
+void encoder_update_user(uint8_t index, bool clockwise) {
     /*  Custom encoder control - handles CW/CCW turning of encoder
      *  Default behavior:
      *    main layer:
@@ -83,8 +99,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
      *      CCW: - (minus/underscore - decrease slider in adobe products)
      */
     if (index == 0) {
-        switch (get_highest_layer(layer_state)) {
-            case 0:
+        switch (biton32(layer_state)) {
+            case _BASE:
                 // main layer - move mouse right (CW) and left (CCW)
                 if (clockwise) {
                     tap_code(KC_MS_R);
@@ -103,5 +119,4 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 break;
         }
     }
-    return true;
 }
