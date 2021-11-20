@@ -13,6 +13,8 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Modifications for found-meishi 2021 bw
 */
 
 #pragma once
@@ -23,9 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xBC42
 #define PRODUCT_ID      0x0003
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Biacco42
-#define PRODUCT         meishi2
-#define DESCRIPTION     The better micro macro keyboard
+#define MANUFACTURER    bw
+#define PRODUCT         found_meishi
+#define DESCRIPTION     You found the better micro macro keyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 2
