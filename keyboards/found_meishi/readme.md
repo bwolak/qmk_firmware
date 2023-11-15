@@ -14,3 +14,5 @@ This functionality is written into a keymap. The macropad comes with the `demo` 
 
 To build a keymap, clone this repo and run `util/docker_build.sh found_meishi:<keymap-name>`.
 You may need to run `make git-submodule` before building the first time.
+
+You will most likely want to use [QMK Toolbox](https://github.com/qmk/qmk_toolbox) to flash your keymap. Refer to QMK documentation for more information on building and flashing.
